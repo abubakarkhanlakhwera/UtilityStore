@@ -1,0 +1,11 @@
+<!-- authapp/templates/authapp/auth.html -->
+{% extends "base.html" %}
+{% block title %}Authentication{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Please Sign In or Sign Up</h2>
+    <a href="{% url 'login' %}" class="btn btn-primary">Sign In</a>
+    <a href="{% url 'signup' %}" class="btn btn-success">Sign Up</a>
+</div>
+{% endblock content %}

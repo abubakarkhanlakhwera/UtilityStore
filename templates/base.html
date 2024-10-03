@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa !important;
+            background-color: #495057;
+        }
+        .dropdown-item:hover {
+            background-color: #495057;
+            color: #f8f9fa !important;
+        }
+        .form-control {
+            width: 250px;
+        }
+        .cart-icon {
+            width: 30px; /* Adjust the width of the cart icon */
+            height: auto;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'home' %}" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stores</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownId">
+                        {% for store in stores %}
+                            <a class="dropdown-item" href="{% url 'store_detail' store.id %}">{{ store.name }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
+
+            <form class="d-flex my-2 my-lg-0" action="https://www.google.com/search" method="GET">
+                <input class="form-control me-sm-2" type="text" name="q" placeholder="Search in Google" aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+            <!-- Cart Button -->
+            <ul class="navbar-nav ms-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart:cart_details' %}">
+                        <img src="{% static 'images/cart-icon.png' %}" alt="Cart" class="cart-icon"> Cart
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Admin Button -->
+            <ul class="navbar-nav ms-3">
+                <li class="nav-item">
+                    <a class="btn btn-outline-light" href="/admin">Admin Panel</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

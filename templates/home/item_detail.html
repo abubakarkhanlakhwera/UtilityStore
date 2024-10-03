@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Item Details {% endblock title %}
+{% block content %}
+<div style="background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); height: 100vh; padding: 20px;"> <!-- Full-screen background -->
+    <div class="container mt-5">
+        <div class="card mx-auto" style="max-width: 25rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);"> <!-- Card styling -->
+            <div class="text-center mt-3">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;"> <!-- Oval-shaped image -->
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text"><strong>Price:</strong> {{ item.price }}</p>
+                {% if item.discount %}
+                  <p class="card-text"><strong>Discount:</strong> {{ item.discount }}%</p>
+                {% endif %}
+                <p class="card-text"><strong>Uploaded By:</strong> {{ item.uploaded_by }}</p>
+                <p class="card-text"><strong>Description:</strong> {{ item.details }}</p>
+                <a href="{% url 'items_by_store_type' item.store.type %}" class="btn btn-primary mt-3">Back to Items</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
