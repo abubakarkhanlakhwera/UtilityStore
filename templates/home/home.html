@@ -24,9 +24,7 @@
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       transition: transform 0.2s, box-shadow 0.2s;
-      width: 100%;
-      max-width: 350px;
-      height: 450px;
+      height: 100%; /* Allow the card to fill height dynamically */
     }
 
     .store-card:hover {
@@ -53,7 +51,7 @@
     .card-img-top {
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
-      height: 250px;
+      height: 200px;
       object-fit: cover;
     }
 
@@ -99,9 +97,9 @@
 
   <!-- Store Cards Section -->
   <div class="container mt-5">
-    <div class="row justify-content-center">
+    <div class="row">
       {% for store in stores %}
-      <div class="col-md-4 d-flex justify-content-center">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
         <div class="card store-card" {% if store.is_hidden and not user.is_superuser %}style="display: none;"{% endif %}>
           <img src="{{ store.image.url }}" class="card-img-top" alt="{{ store.name }}">
           <div class="card-body">
@@ -154,4 +152,5 @@
       {% endfor %}
     </div>
   </div>
+  
 {% endblock content %}

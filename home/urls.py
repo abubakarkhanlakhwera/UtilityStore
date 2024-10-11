@@ -24,4 +24,6 @@ urlpatterns = [
     path('item/<int:item_id>/delete/', views.delete_item, name="delete_item"),  # Add this line
     #for hidding store
     path('hide_store/<int:store_id>/', views.hide_store, name='hide_store'),
+    # For searching items
+    path('search/', views.search_items, name='search_items'), 
 ]

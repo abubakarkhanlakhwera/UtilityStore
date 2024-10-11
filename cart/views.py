@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Cart, CartItem
 from home.models import Items
 
@@ -43,3 +44,23 @@ def cart_detail(request):
         'total_price': total_price,
     }
     return render(request, 'cart/cart_detail.html', context)
+def update_quantity(request, item_id):
+    if request.method == "POST":
+        cart = Cart.objects.get(user=request.user)  # Get the user's cart
+        item = get_object_or_404(Items, id=item_id)
+
+        # Get the new quantity from the form
+        new_quantity = int(request.POST.get('quantity', 1))
+
+        # Ensure the total quantity does not exceed the stock available (optional)
+        if new_quantity > item.quantity:  # Assuming you have a stock field in Item
+            messages.error(request, f'Cannot add more than {item.stock} of this item.')
+            return redirect('cart:cart_detail')  # Redirect back to cart detail
+
+        # Update or create the cart item
+        cart_item, created = cart.items.get_or_create(item=item)
+        cart_item.quantity = new_quantity
+        cart_item.save()
+
+        messages.success(request, 'Item quantity updated successfully.')
+        return redirect('cart:cart_detail')

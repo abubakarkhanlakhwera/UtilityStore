@@ -74,6 +74,11 @@
       color: #2ecc71;
       font-weight: bold;
     }
+
+    .out-of-stock {
+      color: #e74c3c; /* Change color to indicate out of stock */
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -104,14 +109,19 @@
               <p class="card-text"><strong>Price:</strong> {{ item.price }}</p>
             {% endif %}
 
-            <a href="{% url 'item_detail' item.id %}" class="btn btn-primary mt-2">View Item Details</a>
+            <!-- Check quantity before displaying the Add to Cart button -->
+            {% if item.quantity > 0 %}
+              <a href="{% url 'item_detail' item.id %}" class="btn btn-primary mt-2">View Item Details</a>
 
-            <!-- Add to Cart Button: Only show if user is not admin -->
-            {% if not user.is_superuser %}
-            <form action="{% url 'cart:add_to_cart' item.id %}" method="post" class="mt-2">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">Add to Cart</button>
-            </form>
+              <!-- Add to Cart Button: Only show if user is not admin -->
+              {% if not user.is_superuser %}
+              <form action="{% url 'cart:add_to_cart' item.id %}" method="post" class="mt-2">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success">Add to Cart</button>
+              </form>
+              {% endif %}
+            {% else %}
+              <p class="out-of-stock">Out of Stock</p> <!-- Show out of stock message -->
             {% endif %}
 
             <!-- Admin Edit/Delete Buttons -->
@@ -133,5 +143,4 @@
     </div>
   </div>
 
-  
 {% endblock content %}

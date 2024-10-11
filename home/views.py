@@ -14,7 +14,11 @@ def store_detail(request, store_id):
     store = get_object_or_404(Store, id=store_id)
     items = store.items.all()  
     return render(request, 'home/store_detail.html', {'store': store, 'items': items})
-
+def hide_store(request, store_id):
+    store = get_object_or_404(Store, id=store_id)
+    store.is_hidden = True  # Assuming you have a field 'is_hidden' in your Store model
+    store.save()
+    return redirect('store_list')
 # Items filtered by store type
 def items_by_store_type(req, store_type):
     items = Items.objects.filter(type=store_type)
@@ -81,9 +85,19 @@ def delete_item(request, item_id):
     return render(request, 'home/confirm_delete_item.html', {'item': item})
 
 @login_required
-def hide_store(request, store_id):
-    store = get_object_or_404(Store, id=store_id)
-    if request.method == 'POST' and request.user.is_superuser:
-        store.is_hidden = not store.is_hidden  # Toggle the hidden state
-        store.save()
-    return redirect('home')
+def search_items(request):
+    query = request.GET.get('q', '')
+    keywords = query.split()  # Split the query into individual keywords
+    items = Items.objects.all()  # Start with all items
+
+    if keywords:
+        # Create a Q object to filter items based on all keywords
+        from django.db.models import Q
+        query_filters = Q()
+        for keyword in keywords:
+            query_filters |= Q(name__icontains=keyword) | Q(details__icontains=keyword)
+
+        # Filter items based on the combined Q object
+        items = items.filter(query_filters)
+
+    return render(request, 'home/search_results.html', {'items': items})

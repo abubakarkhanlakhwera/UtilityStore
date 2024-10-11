@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('The_SECRET_KEY')
+SECRET_KEY = 'django-insecure-(axhc!$bg^&4e9c#51uhx^g64p4%lw!yq@t#^bh2xsu0*z9zd7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("MY_DEBUG", cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django_admin_kubi',
+    'django_auto_logout',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,8 +52,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'authapp.middleware.SessionTimeoutMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_auto_logout.middleware.auto_logout', # Django auto Logout
 ]
 
 ROOT_URLCONF = 'foodStore.urls'
@@ -68,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_auto_logout.context_processors.auto_logout_client',# Django auto Logout
+                
             ],
         },
     },
@@ -134,6 +139,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
-LOGIN_URL = 'login '  # Make sure this matches the name defined in authapp.urls
+LOGIN_URL = 'login'  # Make sure this matches the name defined in authapp.urls
 LOGIN_REDIRECT_URL = 'home'  # Redirect to home after login
 LOGOUT_REDIRECT_URL = 'auth_page'  # Redirect to auth page after logout
+# settings.py
+
+AUTO_LOGOUT = {
+    'IDLE_TIME': 600,  # Time in seconds, e.g., 600 seconds (10 minutes)
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    'MESSAGE': 'Your session has timed out due to inactivity. Please log in again.',
+}
+
+SESSION_COOKIE_AGE = 600
+
+# Optionally, make sessions expire when the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Optionally, use persistent sessions for users who check 'Remember Me'
+SESSION_SAVE_EVERY_REQUEST = True  # Refresh session expiry time on each request

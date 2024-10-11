@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Search Results</h2>
+  {% if items %}
+    <ul>
+      {% for item in items %}
+        <li>{{ item.name }} - {{ item.get_discounted_price }}$</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No items found matching your search.</p>
+  {% endif %}
+{% endblock %}
