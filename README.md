@@ -1,49 +1,29 @@
-# UtilityStore
+# Utility Store
 
-## Overview
-UtilityStore is a web-based application designed to help users manage and organize various utilities. This project leverages CSS for styling, Python for backend logic, and HTML for the structure of the web pages.
+A web utility store application with a Python backend and CSS/HTML frontend.
 
-## Features
-- User-friendly interface
-- Efficient organization of utilities
-- Responsive design
+## Purpose
 
-## Technologies Used
-- **CSS**: 82.2%
-- **Python**: 10.3%
-- **HTML**: 7.5%
+This project explores how utility-style tools can be organized into a web application with a clear interface. It is useful for practicing backend/frontend separation on a small app.
 
-## Getting Started
-### Prerequisites
-- Python 3.x
-- A web browser
+## What This Shows
 
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/abubakarkhanlakhwera/UtilityStore.git
-    ```
-2. Navigate to the project directory:
-    ```bash
-    cd UtilityStore
-    ```
-3. Install necessary dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+- Utility app layout
+- Python-backed web flow
+- HTML/CSS frontend structure
 
-## Usage
-1. Run the application:
-    ```bash
-    python app.py
-    ```
-2. Open your web browser and go to `http://localhost:5000`.
+## Stack
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
+- Python
+- CSS
+- HTML
 
-## License
-This project is licensed under the MIT License.
+## Next Improvements
 
-## Acknowledgements
-- Thanks to all contributors and open-source projects that made this project possible.
+- Add screenshots
+- Document available utilities
+- Add setup and run commands
+
+## Author
+
+Abubakar Khan Lakhwera
